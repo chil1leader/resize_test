@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    nginx:
+        restart: always
+        image: nginx:latest
+        expose:
+          - 8080
+        ports:
+        - "80:8080"
+    volumes:
+      - .db_data/db.sqlite3:/db.sqlite3
+      - ./img/media:/srv/www/img/media
+      - ./img/logs:/srv/www/img/logs
+      - ./docker/nginx:/etc/nginx/conf.d
+    ports:
+      - "8000:8000"
+    depends_on:
+            - python
+  python:
+        restart: always
+    build:
+            context: .
+            dockerfile: docker/python/Dockerfile
+        volumes:
+            - ./img:/srv/www/img
+        expose:
+          - 8000
+        ports:
+            - 8000:8000
+        command: "gunicorn -c gunicorn.py img.wsgi"
