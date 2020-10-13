@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title%}Home{% endblock title %}
+<head>
+    <title>Список изображений</title>
+  </head>
+{%block content%}
+{% if object_list.count > 0 %}
+    {% for image in object_list %}
+    <a href="{% url 'image_edit' image.pk %}"><h3>{{ image.image.name }}</h3></a>
+    {% endfor %}
+{% else %}
+    <h2>Картинок нет</h2>
+{% endif %}
+{% endblock content %}
+
+

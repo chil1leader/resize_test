@@ -1,0 +1,7 @@
+<h3><a href="{% url 'home' %}">Назад к списку</a></h3>
+<h1>Новое изображение</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Добавить</button>
+</form>
